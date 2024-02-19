@@ -1,0 +1,4 @@
+name: VetoVerse
+version: '${project.version}'
+main: com.example.vetoverse.VetoVerse
+api-version: '1.20'
