@@ -10,8 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class AntiSpam implements Listener {
+public class AntiSpam extends JavaPlugin implements Listener {
+
+    @Override
+    public void onEnable(){
+        Bukkit.getServer().getPluginManager().registerEvents(this,this);
+    }
     private static final HashMap<String,Integer> lc = new HashMap<>();
     private static final HashMap<String,Integer> spam = new HashMap<>();
     private static int ctime = (int)(System.currentTimeMillis() / 1000);

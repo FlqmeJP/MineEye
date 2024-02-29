@@ -1,16 +1,16 @@
 package com.example.vetoverse;
 
-import org.bukkit.entity.Player;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
-public class AntiFly extends JavaPlugin implements Listener {
+public class AntiSpeed  extends JavaPlugin implements Listener{
 
     @Override
     public void onEnable(){
@@ -18,23 +18,15 @@ public class AntiFly extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void Flying(PlayerToggleFlightEvent e){
+    public void onPlayerMove(PlayerMoveEvent e){
         Player player = e.getPlayer();
-        VetoVerse vetoverse = (VetoVerse) player.getServer().getPluginManager().getPlugin("VetoVerse");
 
-        if(player.isOp()){
-            //オペレーター権限をもっているプレイヤーのイベント
-            return;
-        }
-        if(e.isFlying()){
-            //オペレーター権限がないプレイヤーのイベント
-            KickAndBan(player,"Fly");
-        }
-        else{
-            KickAndBan(player,"Fly");
+        double speed = player.getWalkSpeed();
+
+        if(speed > 0.5){
+            KickAndBan(player,"Speed");
         }
     }
-
     private void KickAndBan(Player player,String reason){
         //プレイヤーをサーバーから蹴った後、接続禁止処理を実行
         player.kickPlayer(getBannedMessage(reason));
